@@ -77,7 +77,8 @@ export class App extends Component {
                        clickCallback={this.handlePageClick}
                        containerClassName={"pagination"}
                        subContainerClassName={"pages pagination"}
-                       activeClassName={"active"} />
+                       activeClassName={"active"}
+                       mobileBreakpoint={768} />
       </div>
     );
   }

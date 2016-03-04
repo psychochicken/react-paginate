@@ -16,6 +16,11 @@ export default class PaginationBoxView extends Component {
     clickCallback         : PropTypes.func,
     initialSelected       : PropTypes.number,
     forceSelected         : PropTypes.number,
+    mobilePageClassName   : PropTypes.string,
+    mobileBreakpoint      : PropTypes.number.isRequired,
+    mobilePageLabel       : PropTypes.string,
+    mobileOfLabel         : PropTypes.string,
+    mobileAlways          : PropTypes.bool,
     containerClassName    : PropTypes.string,
     subContainerClassName : PropTypes.string,
     pageClassName         : PropTypes.string,
@@ -38,7 +43,12 @@ export default class PaginationBoxView extends Component {
     previousLabel        : "Previous",
     nextLabel            : "Next",
     breakLabel           : "...",
-    disabledClassName    : "disabled"
+    disabledClassName    : "disabled",
+    mobileBreakpoint     : 768,
+    mobilePageClassName  : "page mobile",
+    mobilePageLabel      : "Page",
+    mobileOfLabel        : "of",
+    mobileAlways         : false
   };
 
   constructor(props) {
@@ -115,7 +125,12 @@ export default class PaginationBoxView extends Component {
             pageClassName={this.props.pageClassName}
             pageLinkClassName={this.props.pageLinkClassName}
             activeClassName={this.props.activeClassName}
-            disabledClassName={this.props.disabledClassName} />
+            disabledClassName={this.props.disabledClassName}
+            mobilePageClassName={this.props.mobilePageClassName}
+            mobileBreakpoint={this.props.mobileBreakpoint}
+            mobilePageLabel={this.props.mobilePageLabel}
+            mobileOfLabel={this.props.mobileOfLabel}
+            mobileAlways={this.props.mobileAlways} />
         </li>
 
         <li onClick={this.handleNextPage} className={nextClasses}>

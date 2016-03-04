@@ -83,6 +83,20 @@ Open your browser and go to `http://localhost:3000/`.
 | `nextLinkClassName` | `String` | The classname on tag `a` of the `next` button. |
 | `disabledClassName` | `String` | The classname for disabled `previous` and `next` buttons. |
 
+
+## Mobile Props
+
+These props change the way the mobile version of the page list is rendered. The default configuration outputs the following between the next and previous buttons:
+
+>  Page 3 of 20
+
+| Name | Type | Description |
+| --- | --- | --- | --- |
+| `mobileBreakpoint` | `Number` | **Required.** The breakpoint where the mobile version kicks in. |
+| `mobilePageLabel` | `String` | The text displayed before the page numbers on mobile. |
+| `mobileOfLabel` | `String` | The text displayed between the selected page and the total page count on mobile. |
+| `mobileAlways` | `Boolean` | Always show the mobile version of pagination. |
+
 ## Contribute
 
 1. [Submit an issue](https://github.com/AdeleD/react-paginate/issues)

@@ -11,3 +11,15 @@
 #react-paginate .break a {
     cursor: default;
 }
+
+#react-paginate .page.mobile span {
+  border-radius: 0;
+  padding: 6px 0;
+  border: none;
+}
+
+#react-paginate .page.mobile span:hover {
+  color: #337ab7;
+  background-color: transparent;
+  border-color: transparent;
+}

@@ -60,4 +60,23 @@ describe('PaginationBoxView', () => {
     // Prev, current, next
     expect(pageItems.length).toBe(4);
   });
+
+  it('test rendering default mobile pagination elements', function() {
+    const mobilePagination = ReactTestUtils.renderIntoDocument(
+      <PaginationBoxView mobileAlways={true} />
+    );
+
+    const mobileElements = ReactDOM.findDOMNode(mobilePagination).querySelectorAll('span');
+
+    // 1. pageLabel "Page"
+    // 2. &nbsp;
+    // 3. selected "5"
+    // 4. &nbsp;
+    // 5. pageOfLabel "of"
+    // 6. &nbsp;
+    // 7. pageNum "20"
+
+    expect(mobileElements.length).toBe(7);
+
+  });
 });

@@ -6,6 +6,53 @@ import PageView from './PageView';
 
 
 export default class PaginationListView extends Component {
+  constructor() {
+    super();
+    this.state = {
+      isMobile: true
+    };
+  }
+
+  componentDidMount() {
+    this.checkMobileWidth();
+
+    window.addEventListener('resize', () => {
+      this.checkMobileWidth();
+    }, true);
+  }
+
+  checkMobileWidth = () => {
+    if (window.innerWidth > this.props.mobileBreakpoint) {
+      this.setState({isMobile: false});
+    } else {
+      this.setState({isMobile: true});
+    }
+  };
+
+  renderMobileListView = (items) => {
+    return (
+      <ul className={this.props.subContainerClassName}>
+        <li className={this.props.mobilePageClassName}>
+          {this.props.mobilePageLabel}
+          &nbsp;
+          {this.props.selected + 1}
+          &nbsp;
+          {this.props.mobileOfLabel}
+          &nbsp;
+          {this.props.pageNum}
+        </li>
+      </ul>
+    );
+  };
+
+  renderDesktopListView = (items) => {
+    return (
+      <ul className={this.props.subContainerClassName}>
+        {createFragment(items)}
+      </ul>
+    );
+  };
+
   render() {
     let items = {};
 
@@ -77,10 +124,6 @@ export default class PaginationListView extends Component {
       }
     }
 
-    return (
-      <ul className={this.props.subContainerClassName}>
-        {createFragment(items)}
-      </ul>
-    );
+    return this.state.isMobile || this.props.mobileAlways ? this.renderMobileListView() : this.renderDesktopListView(items);
   }
 };
