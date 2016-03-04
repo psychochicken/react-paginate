@@ -114,7 +114,12 @@ var PaginationBoxView = function (_Component) {
             pageClassName: this.props.pageClassName,
             pageLinkClassName: this.props.pageLinkClassName,
             activeClassName: this.props.activeClassName,
-            disabledClassName: this.props.disabledClassName })
+            disabledClassName: this.props.disabledClassName,
+            mobilePageClassName: this.props.mobilePageClassName,
+            mobileBreakpoint: this.props.mobileBreakpoint,
+            mobilePageLabel: this.props.mobilePageLabel,
+            mobileOfLabel: this.props.mobileOfLabel,
+            mobileAlways: this.props.mobileAlways })
         ),
         _react2.default.createElement(
           'li',
@@ -149,6 +154,11 @@ PaginationBoxView.propTypes = {
   clickCallback: _react.PropTypes.func,
   initialSelected: _react.PropTypes.number,
   forceSelected: _react.PropTypes.number,
+  mobilePageClassName: _react.PropTypes.string,
+  mobileBreakpoint: _react.PropTypes.number.isRequired,
+  mobilePageLabel: _react.PropTypes.string,
+  mobileOfLabel: _react.PropTypes.string,
+  mobileAlways: _react.PropTypes.bool,
   containerClassName: _react.PropTypes.string,
   subContainerClassName: _react.PropTypes.string,
   pageClassName: _react.PropTypes.string,
@@ -170,7 +180,12 @@ PaginationBoxView.defaultProps = {
   previousLabel: "Previous",
   nextLabel: "Next",
   breakLabel: "...",
-  disabledClassName: "disabled"
+  disabledClassName: "disabled",
+  mobileBreakpoint: 768,
+  mobilePageClassName: "page mobile",
+  mobilePageLabel: "Page",
+  mobileOfLabel: "of",
+  mobileAlways: false
 };
 exports.default = PaginationBoxView;
 ;

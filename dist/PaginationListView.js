@@ -32,10 +32,60 @@ var PaginationListView = function (_Component) {
   function PaginationListView() {
     _classCallCheck(this, PaginationListView);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(PaginationListView).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(PaginationListView).call(this));
+
+    _this.checkMobileWidth = function () {
+      if (window.innerWidth > _this.props.mobileBreakpoint) {
+        _this.setState({ isMobile: false });
+      } else {
+        _this.setState({ isMobile: true });
+      }
+    };
+
+    _this.renderMobileListView = function (items) {
+      return _react2.default.createElement(
+        'ul',
+        { className: _this.props.subContainerClassName },
+        _react2.default.createElement(
+          'li',
+          { className: _this.props.mobilePageClassName },
+          _this.props.mobilePageLabel,
+          ' ',
+          _this.props.selected + 1,
+          ' ',
+          _this.props.mobileOfLabel,
+          ' ',
+          _this.props.pageNum
+        )
+      );
+    };
+
+    _this.renderDesktopListView = function (items) {
+      return _react2.default.createElement(
+        'ul',
+        { className: _this.props.subContainerClassName },
+        (0, _reactAddonsCreateFragment2.default)(items)
+      );
+    };
+
+    _this.state = {
+      isMobile: true
+    };
+    return _this;
   }
 
   _createClass(PaginationListView, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      this.checkMobileWidth();
+
+      window.addEventListener('resize', function () {
+        _this2.checkMobileWidth();
+      }, true);
+    }
+  }, {
     key: 'render',
     value: function render() {
       var items = {};
@@ -104,11 +154,7 @@ var PaginationListView = function (_Component) {
         }
       }
 
-      return _react2.default.createElement(
-        'ul',
-        { className: this.props.subContainerClassName },
-        (0, _reactAddonsCreateFragment2.default)(items)
-      );
+      return this.state.isMobile || this.props.mobileAlways ? this.renderMobileListView() : this.renderDesktopListView(items);
     }
   }]);
 
