@@ -114,8 +114,8 @@ var PaginationListView = function (_Component) {
           rightSide = this.props.pageRangeDisplayed - leftSide;
         }
 
-        var index = undefined;
-        var page = undefined;
+        var index = void 0;
+        var page = void 0;
 
         for (index = 0; index < this.props.pageNum; index++) {
 
