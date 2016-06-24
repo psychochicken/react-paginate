@@ -16,6 +16,7 @@
   border-radius: 0;
   padding: 6px 0;
   border: none;
+  margin: 0 10px;
 }
 
 #react-paginate .page.mobile span:hover {

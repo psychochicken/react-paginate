@@ -59,7 +59,8 @@ export default class PaginationBoxView extends Component {
     this.state = {
       selected: props.initialSelected ? props.initialSelected :
                 props.forceSelected   ? props.forceSelected :
-                0
+                0,
+      isMobile: true
     };
   }
 
@@ -68,6 +69,13 @@ export default class PaginationBoxView extends Component {
     if (typeof(this.props.initialSelected) !== 'undefined') {
       this.callCallback(this.props.initialSelected);
     }
+
+    // Check the window is smaller than the mobile breakpoint
+    this.checkMobileWidth();
+    // Add a listener on resize to check mobile widths
+    window.addEventListener('resize', () => {
+      this.checkMobileWidth();
+    }, true);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -75,6 +83,14 @@ export default class PaginationBoxView extends Component {
       this.setState({selected: nextProps.forceSelected});
     }
   }
+
+  checkMobileWidth = () => {
+    if (window.innerWidth > this.props.mobileBreakpoint) {
+      this.setState({isMobile: false});
+    } else {
+      this.setState({isMobile: true});
+    }
+  };
 
   handlePreviousPage = evt => {
     evt.preventDefault ? evt.preventDefault() : (evt.returnValue = false);
@@ -187,6 +203,22 @@ export default class PaginationBoxView extends Component {
     return items;
   };
 
+  renderMobile = () => {
+    return (
+      <li className={this.props.mobilePageClassName}>
+        <span>
+          {this.props.mobilePageLabel}
+          &nbsp;
+          {this.state.selected + 1}
+          &nbsp;
+          {this.props.mobileOfLabel}
+          &nbsp;
+          {this.props.pageNum}
+        </span>
+      </li>
+    );
+  }
+
   render() {
     let disabled = this.props.disabledClassName;
 
@@ -202,7 +234,7 @@ export default class PaginationBoxView extends Component {
           <a className={this.props.previousLinkClassName}>{this.props.previousLabel}</a>
         </li>
 
-        {createFragment(this.pagination())}
+        {this.state.isMobile || this.props.mobileAlways ? this.renderMobile() : createFragment(this.pagination())}
 
         <li onClick={this.handleNextPage} className={nextClasses}>
           <a className={this.props.nextLinkClassName}>{this.props.nextLabel}</a>

@@ -74,17 +74,11 @@ describe('PaginationBoxView', () => {
       <PaginationBoxView mobileAlways={true} />
     );
 
-    const mobileElements = ReactDOM.findDOMNode(mobilePagination).querySelectorAll('span');
+    const mobileElements = ReactDOM.findDOMNode(mobilePagination).querySelectorAll('.mobile');
+    const mobileElementsSpan = ReactDOM.findDOMNode(mobilePagination).querySelectorAll('span');
 
-    // 1. pageLabel "Page"
-    // 2. &nbsp;
-    // 3. selected "5"
-    // 4. &nbsp;
-    // 5. pageOfLabel "of"
-    // 6. &nbsp;
-    // 7. pageNum "20"
-
-    expect(mobileElements.length).toBe(7);
-
+    // Since react 15 no more spans! Should only render 1 .mobile element if mobile is on
+    expect(mobileElements.length).toBe(1);
+    expect(mobileElementsSpan.length).toBe(1);
   });
 });

@@ -44,6 +44,14 @@ var PaginationBoxView = function (_Component) {
 
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(PaginationBoxView).call(this, props));
 
+    _this.checkMobileWidth = function () {
+      if (window.innerWidth > _this.props.mobileBreakpoint) {
+        _this.setState({ isMobile: false });
+      } else {
+        _this.setState({ isMobile: true });
+      }
+    };
+
     _this.handlePreviousPage = function (evt) {
       evt.preventDefault ? evt.preventDefault() : evt.returnValue = false;
       if (_this.state.selected > 0) {
@@ -102,34 +110,34 @@ var PaginationBoxView = function (_Component) {
           rightSide = _this.props.pageRangeDisplayed - leftSide;
         }
 
-        var index = void 0;
+        var _index = void 0;
         var page = void 0;
         var breakView = void 0;
 
-        for (index = 0; index < _this.props.pageNum; index++) {
+        for (_index = 0; _index < _this.props.pageNum; _index++) {
 
-          page = index + 1;
+          page = _index + 1;
 
           var pageView = _react2.default.createElement(_PageView2.default, {
-            onClick: _this.handlePageSelected.bind(null, index),
-            selected: _this.state.selected === index,
+            onClick: _this.handlePageSelected.bind(null, _index),
+            selected: _this.state.selected === _index,
             pageClassName: _this.props.pageClassName,
             pageLinkClassName: _this.props.pageLinkClassName,
             activeClassName: _this.props.activeClassName,
-            page: index + 1 });
+            page: _index + 1 });
 
           if (page <= _this.props.marginPagesDisplayed) {
-            items['key' + index] = pageView;
+            items['key' + _index] = pageView;
             continue;
           }
 
           if (page > _this.props.pageNum - _this.props.marginPagesDisplayed) {
-            items['key' + index] = pageView;
+            items['key' + _index] = pageView;
             continue;
           }
 
-          if (index >= _this.state.selected - leftSide && index <= _this.state.selected + rightSide) {
-            items['key' + index] = pageView;
+          if (_index >= _this.state.selected - leftSide && _index <= _this.state.selected + rightSide) {
+            items['key' + _index] = pageView;
             continue;
           }
 
@@ -140,7 +148,7 @@ var PaginationBoxView = function (_Component) {
           if (_this.props.breakLabel && breakLabelValue !== breakView) {
             breakView = _react2.default.createElement(_BreakView2.default, { breakLabel: _this.props.breakLabel });
 
-            items['key' + index] = breakView;
+            items['key' + _index] = breakView;
           }
         }
       }
@@ -148,8 +156,27 @@ var PaginationBoxView = function (_Component) {
       return items;
     };
 
+    _this.renderMobile = function () {
+      return _react2.default.createElement(
+        'li',
+        { className: _this.props.mobilePageClassName },
+        _react2.default.createElement(
+          'span',
+          null,
+          _this.props.mobilePageLabel,
+          ' ',
+          _this.state.selected + 1,
+          ' ',
+          _this.props.mobileOfLabel,
+          ' ',
+          _this.props.pageNum
+        )
+      );
+    };
+
     _this.state = {
-      selected: props.initialSelected ? props.initialSelected : props.forceSelected ? props.forceSelected : 0
+      selected: props.initialSelected ? props.initialSelected : props.forceSelected ? props.forceSelected : 0,
+      isMobile: true
     };
     return _this;
   }
@@ -157,10 +184,19 @@ var PaginationBoxView = function (_Component) {
   _createClass(PaginationBoxView, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
+      var _this2 = this;
+
       // Call the callback with the initialSelected item:
       if (typeof this.props.initialSelected !== 'undefined') {
         this.callCallback(this.props.initialSelected);
       }
+
+      // Check the window is smaller than the mobile breakpoint
+      this.checkMobileWidth();
+      // Add a listener on resize to check mobile widths
+      window.addEventListener('resize', function () {
+        _this2.checkMobileWidth();
+      }, true);
     }
   }, {
     key: 'componentWillReceiveProps',
@@ -190,27 +226,7 @@ var PaginationBoxView = function (_Component) {
             this.props.previousLabel
           )
         ),
-        _react2.default.createElement(
-          'li',
-          null,
-          _react2.default.createElement(PaginationListView, {
-            onPageSelected: this.handlePageSelected,
-            selected: this.state.selected,
-            pageNum: this.props.pageNum,
-            pageRangeDisplayed: this.props.pageRangeDisplayed,
-            marginPagesDisplayed: this.props.marginPagesDisplayed,
-            breakLabel: this.props.breakLabel,
-            subContainerClassName: this.props.subContainerClassName,
-            pageClassName: this.props.pageClassName,
-            pageLinkClassName: this.props.pageLinkClassName,
-            activeClassName: this.props.activeClassName,
-            disabledClassName: this.props.disabledClassName,
-            mobilePageClassName: this.props.mobilePageClassName,
-            mobileBreakpoint: this.props.mobileBreakpoint,
-            mobilePageLabel: this.props.mobilePageLabel,
-            mobileOfLabel: this.props.mobileOfLabel,
-            mobileAlways: this.props.mobileAlways })
-        ),
+        this.state.isMobile || this.props.mobileAlways ? this.renderMobile() : (0, _reactAddonsCreateFragment2.default)(this.pagination()),
         _react2.default.createElement(
           'li',
           { onClick: this.handleNextPage, className: nextClasses },

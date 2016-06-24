@@ -78,7 +78,8 @@ export class App extends Component {
                        containerClassName={"pagination"}
                        subContainerClassName={"pages pagination"}
                        activeClassName={"active"}
-                       mobileBreakpoint={768} />
+                       mobileBreakpoint={768}
+                       mobileAlways={true} />
       </div>
     );
   }
