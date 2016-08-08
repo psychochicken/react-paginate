@@ -11,7 +11,6 @@ const BreakView = require('./../react_components/BreakView').default;
 
 import ReactTestUtils from 'react-addons-test-utils';
 
-
 describe('PaginationBoxView', () => {
   const pagination = ReactTestUtils.renderIntoDocument(
     <PaginationBoxView />
@@ -80,5 +79,14 @@ describe('PaginationBoxView', () => {
     // Since react 15 no more spans! Should only render 1 .mobile element if mobile is on
     expect(mobileElements.length).toBe(1);
     expect(mobileElementsSpan.length).toBe(1);
+  });
+
+  it('test breakClassName rendering', function() {
+    const smallPagination = ReactTestUtils.renderIntoDocument(
+      <PaginationBoxView breakClassName={"break-me"}/>
+    );
+
+    const breakItem = ReactDOM.findDOMNode(smallPagination).querySelectorAll(".break-me");
+    expect(breakItem.length).toBe(1);
   });
 });
